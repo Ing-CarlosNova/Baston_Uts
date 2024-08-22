@@ -1,6 +1,6 @@
 #include <SoftwareSerial.h>
 
-SoftwareSerial gps(16,17);
+SoftwareSerial gps(3,1);
 
 char dato=' ';
 
