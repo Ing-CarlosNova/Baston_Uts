@@ -1,0 +1,35 @@
+// las librerias que se requieren y conexión de pines con la SP32 para el funcionamiento del Ultrasonido, GPS, Acelerometro son:
+
+
+1. *Ultrasonic Sensor (HC-SR04)*:
+No se necesita ninguna librería específica.
+
+2. Acelerómetro (ADXL345):
+Wire.h (incluida en el IDE de Arduino)
+SparkFun_ADXL345.h (puedes instalarla desde el gestor de librerías del IDE de Arduino)
+
+
+3.Módulo GPS:
+TinyGPSPlus.h
+SoftwareSerial.h (incluida en el IDE de Arduino)
+
+
+CONEXIONES DE PINES EN LA ESP32:
+1. Sensor Ultrasónico (HC-SR04):
+Trigger: GPIO 12
+Echo: GPIO 13
+Buzzer o Motor de Vibración: GPIO 14
+VCC: 5V (o 3.3V si el sensor lo soporta)
+GND: GND
+
+2. Acelerómetro (ADXL345):
+SDA: GPIO 21
+SCL: GPIO 22
+VCC: 3.3V
+GND: GND
+
+3. Módulo GPS:
+RX del GPS: GPIO 1 (TX del ESP32)
+TX del GPS: GPIO 3 (RX del ESP32)
+VCC: 3.3V (algunos módulos pueden requerir 5V)
+GND: GND
