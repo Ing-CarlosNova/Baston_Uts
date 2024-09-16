@@ -17,10 +17,11 @@ if ($conn->connect_error) {
 $longitud = $_GET['lon'];
 $latitud = $_GET['lat'];
 $posicion = $_GET['pos'];
+$ultrasonido = $_GET['ult'];
 
 
 // Insertar los datos en la base de datos
-$sql = "INSERT INTO valores (longitud, latitud, posicion) VALUES ('$longitud', '$latitud', '$posicion' )";
+$sql = "INSERT INTO valores (longitud, latitud, posicion, ultrasonido) VALUES ('$longitud', '$latitud', '$posicion', '$ultrasonido')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Data inserted successfully";
