@@ -20,6 +20,7 @@ const int Trigger = 12;         // Pin digital 12 para el Trigger del sensor
 const int Echo = 13;            // Pin digital 13 para el Echo del sensor
 const int Buzzer = 14;          // Pin digital 14 para el Buzzer o motor de vibración
 const int AlertDistance = 100;  // Distancia de alerta en cm (ajústala según necesites)
+String dis;
 
 // Datos de conexión Wi-Fi
 const char* ssid = "WMSAS-TALLER";        // El nombre de la red Wi-Fi
@@ -83,7 +84,7 @@ void loop() {
     // Llamar a la función que maneja el GPS
     getGPSData();
     //Enviar datos de GPS y estado del baston
-    sendDataToServer(posicion,lati,longi);
+    sendDataToServer(posicion,lati,longi,dis);
   }
   
 
@@ -118,7 +119,8 @@ void handleUltrasonic() {
 
   t = pulseIn(Echo, HIGH);
   d = t / 58.2;
-
+  dis = d;
+  
   Serial.print("Distancia: ");
   Serial.print(d);
   Serial.println(" cm");
@@ -203,12 +205,12 @@ void getGPSData() {
 }
 
 // Función para enviar datos al servidor
-void sendDataToServer(String pos, String latit,String longit) {
+void sendDataToServer(String pos, String latit,String longit, String dis) {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
 
     // Construir la URL con la posición
-    String serverPath = "http://192.168.0.107/prueba.php?lon=" + longit + "&lat=" + latit + "&pos=" + pos ;
+    String serverPath = "http://192.168.0.107/prueba.php?lon=" + longit + "&lat=" + latit + "&pos=" + pos + "$ult=" + dis;
     http.begin(serverPath);
 
     int httpResponseCode = http.GET();
