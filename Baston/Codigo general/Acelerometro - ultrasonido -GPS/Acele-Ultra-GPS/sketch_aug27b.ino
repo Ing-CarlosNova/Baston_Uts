@@ -13,7 +13,7 @@ unsigned long previousMillis3 = 0;
 // Intervalos de tiempo en milisegundos
 const unsigned long interval1 = 1000;      // 1 segundo
 const unsigned long interval2 = 2000;      // 2 segundos
-const unsigned long interval3 = 300000;    // 5 minutos (300,000 ms)
+const unsigned long interval3 = 20000;    // 20 segundos (20,000 ms)
 
 // Pines para el sensor ultrasónico
 const int Trigger = 12;         // Pin digital 12 para el Trigger del sensor
@@ -64,24 +64,26 @@ void loop() {
   // Obtener el tiempo actual
   unsigned long currentMillis = millis();
 
-  // Ejecutar función1 cada 1 segundo
-  if (currentMillis - previousMillis1 >= interval1) {
-    previousMillis1 = currentMillis; 
-    // Llamar a la función que maneja el sensor ultrasónico
-    handleUltrasonic();
-  }
+//  // Ejecutar función1 cada 1 segundo
+//  if (currentMillis - previousMillis1 >= interval1) {
+//    previousMillis1 = currentMillis; 
+//    // Llamar a la función que maneja el sensor ultrasónico
+//    handleUltrasonic();
+//  }
+//
+//  // Ejecutar función2 cada 2 segundos
+//  if (currentMillis - previousMillis2 >= interval2) {
+//    previousMillis2 = currentMillis;
+//    // Llamar a la función que maneja el acelerómetro y enviar la posición a la base de datos
+//    handleAccelerometer();
+//  }
 
-  // Ejecutar función2 cada 2 segundos
-  if (currentMillis - previousMillis2 >= interval2) {
-    previousMillis2 = currentMillis;
-    // Llamar a la función que maneja el acelerómetro y enviar la posición a la base de datos
-    handleAccelerometer();
-  }
-
-  // Ejecutar función3 cada 5 minutos
+  // Ejecutar función3 cada 20 segundos
   if (currentMillis - previousMillis3 >= interval3) {
     previousMillis3 = currentMillis;
-    // Llamar a la función que maneja el GPS
+    // Llamar a la funciones
+    handleUltrasonic();
+    handleAccelerometer();
     getGPSData();
     //Enviar datos de GPS y estado del baston
     sendDataToServer(posicion,lati,longi,dis);
