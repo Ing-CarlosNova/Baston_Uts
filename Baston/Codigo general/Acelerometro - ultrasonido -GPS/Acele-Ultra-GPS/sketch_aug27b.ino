@@ -26,6 +26,9 @@ String dis;
 const char* ssid = "WMSAS-TALLER";        // El nombre de la red Wi-Fi
 const char* password = "303wm2021";  // La contraseña de la red Wi-Fi
 
+// URL pública de tu servidor Railway
+const char* serverName = "https://nodejs-production-f54f.up.railway.app";  
+
 // Inicialización del acelerómetro
 ADXL345 adxl = ADXL345();  // Usa I2C por defecto
 String posicion = "";      // Variable para almacenar la posición del acelerómetro
@@ -89,7 +92,6 @@ void loop() {
     sendDataToServer(posicion,lati,longi,dis);
   }
   
-
   delay(1000); // Espera medio segundo antes de la próxima lectura
 }
 
@@ -211,22 +213,45 @@ void sendDataToServer(String pos, String latit,String longit, String dis) {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
 
-    // Construir la URL con la posición
-    String serverPath = "http://192.168.0.107/prueba.php?lon=" + longit + "&lat=" + latit + "&pos=" + pos + "$ult=" + dis;
-    http.begin(serverPath);
+// Iniciar la solicitud POST
+    http.begin(serverName);
+    http.addHeader("Content-Type", "application/json");
 
-    int httpResponseCode = http.GET();
+   // Crear un objeto JSON para enviar los datos
+    String jsonData = "{\"lon\": " + String(longit) + 
+                      ", \"lat\": " + String(latit) + 
+                      ", \"pos\": " + String(pos) + 
+                      ", \"ult\": " + String(dis) + "}";
+
+    // Enviar la solicitud POST
+    int httpResponseCode = http.POST(jsonData);
 
     if (httpResponseCode > 0) {
       String response = http.getString();
-      Serial.println(httpResponseCode);
-      Serial.println(response);
+      Serial.println(httpResponseCode);  // Código de respuesta HTTP
+      Serial.println(response);  // Respuesta del servidor
     } else {
-      Serial.print("Error en la solicitud: ");
-      Serial.println(httpResponseCode);
+      Serial.println("Error en la solicitud POST");
     }
 
-    http.end();
+    http.end();  // Finalizar la conexión
+  }
+    //// Construir la URL con la posición
+    //String serverPath = "http://192.168.0.107/prueba.php?lon=" + longit + "&lat=" + latit + "&pos=" + pos + "$ult=" + dis;
+    //http.begin(serverPath);
+
+    //int httpResponseCode = http.GET();
+
+    //if (httpResponseCode > 0) {
+    //  String response = http.getString();
+    //  Serial.println(httpResponseCode);
+    //  Serial.println(response);
+    //} else {
+    //  Serial.print("Error en la solicitud: ");
+    //  Serial.println(httpResponseCode);
+    //}
+
+    //http.end();
   } else {
     Serial.println("Error al conectar al WiFi");
   }
