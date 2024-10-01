@@ -27,7 +27,7 @@ const char* ssid = "WMSAS-TALLER";        // El nombre de la red Wi-Fi
 const char* password = "303wm2021";  // La contraseña de la red Wi-Fi
 
 // URL pública de tu servidor Railway
-const char* serverName = "https://nodejs-production-f54f.up.railway.app";  
+const char* serverName = "https://nodejs-production-f54f.up.railway.app/datos.php";  
 
 // Inicialización del acelerómetro
 ADXL345 adxl = ADXL345();  // Usa I2C por defecto
